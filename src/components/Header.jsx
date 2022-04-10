@@ -1,7 +1,20 @@
 import React from 'react'
 
-// import { withStyles } from '@mui/material'
 import {
+  styled,
+  alpha
+} from '@mui/material/styles'
+
+import {
+  withRouter,
+  Switch,
+  Route,
+  Redirect,
+  Link as RouterLink
+} from 'react-router-dom';
+
+import {
+  ThemeProvider,
   Box,
   AppBar,
   Toolbar,
@@ -13,7 +26,8 @@ import {
   // Divider,
   // Menu,
   // MenuItem,
-  Switch,
+  InputBase,
+  Switch as FormSwitch,
   FormGroup,
   FormControlLabel,
   Typography,
@@ -27,8 +41,122 @@ import {
   ConnectWithoutContact as ContactIcon,
   DataObject as ResumeIcon,
   Book as BlogIcon,
+  Search as SearchIcon,
 } from '@mui/icons-material'
 
+
+
+// replace functional methods below with a class for Search
+class HomeSearch extends React.Component {
+
+  #css = {
+    searchStyles: {
+      position: 'relative',
+      borderRadius: this.theme.shape.borderRadius,
+      backgroundColor: alpha(this.theme.palette.common.white, 0.15),
+      '&:hover': {
+        backgroundColor: alpha(this.theme.palette.common.white, 0.25),
+      },
+      marginLeft: 0,
+      width: '100%',
+      [this.theme.breakpoints.up('sm')]: {
+        marginLeft: this.theme.spacing(1),
+        width: 'auth',
+      },
+    },
+    iconStyles: {
+      padding: this.theme.spacing(2),
+      height: '100%',
+      position: 'absolute',
+      pointerEvents: 'none',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    inputStyles: {
+      color: 'inherit',
+      '& .MuiInputBase-input': {
+        padding: this.theme.spacing(1, 1, 1, 0),
+        // vertical padding + font size from searchIcon
+        paddingLeft: `calc(1em + ${this.theme.spacing(4)})`,
+        transition: this.theme.transitions.create('width'),
+        width: '100%',
+        [this.theme.breakpoints.up('sm')]: {
+          width: '12ch',
+          '&:focus': {
+            width: '20ch',
+          },
+        },
+      },
+    },
+  };
+  constructor(props) {
+    super(props);
+    this.props = { ...props };
+    this.theme = this.props.theme;
+    this.state = {};
+  }
+
+  render() {
+    return (
+      <Box
+        sx={{
+          position: 'relative',
+        }}
+      ></Box>
+    );
+  }
+}
+
+const Search = styled('div')(({ theme }) => ({
+  position: 'relative',
+  borderRadius: theme.shape.borderRadius,
+  backgroundColor: alpha(theme.palette.common.white, 0.15),
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+  },
+  marginLeft: 0,
+  width: '100%',
+  [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+  },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+  padding: theme.spacing(0, 2),
+  height: '100%',
+  position: 'absolute',
+  pointerEvents: 'none',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: 'inherit',
+  '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+      width: '12ch',
+      '&:focus': {
+        width: '20ch',
+      },
+    },
+  },
+}));
+
+const ListItemLink = (props) => {
+  React.forwardRef((props, ref) => {
+    return (
+      <RouterLink to={props.to} ref={ref} {...props}/>
+    )
+  })
+}
 
 class HomeHeader extends React.Component {
   #menuData = [
@@ -37,30 +165,37 @@ class HomeHeader extends React.Component {
       icon: () => {
         return <InfoIcon />;
       },
+      to: '/about'
     },
     {
       name: 'Resume',
       icon: () => {
         return <ResumeIcon />;
       },
+      to: '/resume'
     },
     {
       name: 'Blog',
       icon: () => {
         return <BlogIcon />;
       },
+      to: '/blog'
     },
     {
       name: 'Contact',
       icon: () => {
         return <ContactIcon />;
       },
+      to: '/contact'
     },
   ];
   constructor(props) {
     super(props);
     // unwrap props
     this.props = { ...props };
+    this.theme = this.props.theme
+    this.title = this.props.title
+    this.drawerWidth = this.props.drawerWidth
     // state
     this.state = {
       anchorMenuElement: false,
@@ -89,6 +224,9 @@ class HomeHeader extends React.Component {
         this.state.darkMode ? 'dark' : 'light'
       } mode`
     );
+    console.log(
+      `theme data ${JSON.stringify(this.theme)}`
+    )
   }
 
   handleMenu(event) {
@@ -124,75 +262,117 @@ class HomeHeader extends React.Component {
   }
 
   render() {
+    // const ref = React.createRef()
+    const theme = this.props.theme
+    const history = this.props.history
     return (
-      <Box sx={{ flexGrow: 1 }}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={this.handleDrawer}
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
+      <ThemeProvider theme={this.props.theme}>
+        <Box
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+          }}
+        >
+          <AppBar
+            position="fixed"
+            sx={{
+              zIndex: (theme) => theme.zIndex.drawer - 1,
+            }}
+          >
+            <Toolbar>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={this.handleDrawer}
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
 
-            <div>
-              <React.Fragment>
-                <SwipeableDrawer
-                  anchor={'left'}
-                  open={this.state.drawerOpen}
-                  onClose={this.handleDrawer}
-                  onOpen={this.handleDrawer}
-                >
-                  {
-                    <Box
-                      sx={{ width: 'auto' }}
-                      role="presentation"
-                      onClick={this.handleDrawer}
-                      onKeyDown={this.handleDrawer}
-                    >
-                      <List>
-                        {this.#menuData.map((item, index) => (
-                          <ListItem button key={item.name}>
-                            <ListItemIcon>
-                              {item.icon()}
-                            </ListItemIcon>
-                            <ListItemText primary={item.name} />
-                          </ListItem>
-                        ))}
-                      </List>
-                    </Box>
+              <div>
+                <React.Fragment>
+                  <SwipeableDrawer
+                    anchor={'left'}
+                    open={this.state.drawerOpen}
+                    onClose={this.handleDrawer}
+                    onOpen={this.handleDrawer}
+                    sx={{
+                      width: this.drawerWidth,
+                      flexShrink: 0,
+                      [`& .MuiDrawer-paper`]: {
+                        width: this.drawerWidth,
+                        boxSizing: 'border-box',
+                      },
+                    }}
+                  >
+                    {
+                      <Box
+                        sx={{
+                          width: 'auto',
+                          overflow: 'auto',
+                        }}
+                        role="presentation"
+                        onClick={this.handleDrawer}
+                        onKeyDown={this.handleDrawer}
+                      >
+                        <List>
+                          {this.#menuData.map((item, index) => (
+
+                              <ListItem button key={item.name} onClick={() => { history.push(item.to)}}>
+                                <ListItemIcon>{item.icon()}</ListItemIcon>
+                                <ListItemText primary={item.name} />
+                              </ListItem>
+                          ))}
+                        </List>
+                      </Box>
+                    }
+                  </SwipeableDrawer>
+                  <Toolbar />
+                </React.Fragment>
+              </div>
+
+              <Typography
+                variant="h6"
+                component="div"
+                sx={{ flexGrow: 1 }}
+                noWrap
+              >
+                {this.title}
+              </Typography>
+
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  placeholder="Search..."
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+              </Search>
+
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <FormSwitch
+                      aria-label="theme-switch"
+                      checked={this.state.darkMode}
+                      onChange={this.handleSwitch}
+                    />
                   }
-                </SwipeableDrawer>
-              </React.Fragment>
-            </div>
-
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Aaron Peter Samuel
-            </Typography>
-
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Switch
-                    aria-label="theme-switch"
-                    checked={this.state.darkMode}
-                    onChange={this.handleSwitch}
-                  />
-                }
-                label={this.state.darkMode ? 'light mode' : 'dark mode'}
-              ></FormControlLabel>
-            </FormGroup>
-          </Toolbar>
-        </AppBar>
-      </Box>
+                  label={this.state.darkMode ? 'light mode' : 'dark mode'}
+                ></FormControlLabel>
+              </FormGroup>
+            </Toolbar>
+          </AppBar>
+          <Toolbar />
+        </Box>
+      </ThemeProvider>
     );
   }
 }
 
-export default HomeHeader
+export default withRouter(HomeHeader)
