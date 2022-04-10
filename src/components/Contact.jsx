@@ -2,15 +2,11 @@ import React from 'react';
 
 import {
   withRouter,
-  Switch,
-  Route,
-  Redirect,
-  Link
 } from 'react-router-dom';
 
-// import { Route } from 'react-router-dom';
+
 import { Box, Typography } from '@mui/material';
-// import { SupportRounded } from '@mui/icons-material'
+
 
 class Contact extends React.Component {
   constructor(props) {

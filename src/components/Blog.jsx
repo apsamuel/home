@@ -1,7 +1,11 @@
 import React from 'react';
-// import { Route } from 'react-router-dom';
+
+import {
+  withRouter,
+
+} from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-// import { SupportRounded } from '@mui/icons-material'
+
 
 class Blog extends React.Component {
   constructor(props) {
@@ -20,4 +24,4 @@ class Blog extends React.Component {
   }
 }
 
-export default Blog;
+export default withRouter(Blog);

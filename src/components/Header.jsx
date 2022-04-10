@@ -7,10 +7,10 @@ import {
 
 import {
   withRouter,
-  Switch,
-  Route,
-  Redirect,
-  Link as RouterLink
+  // Switch,
+  // Route,
+  // Redirect,
+  // Link as RouterLink
 } from 'react-router-dom';
 
 import {
@@ -47,66 +47,66 @@ import {
 
 
 // replace functional methods below with a class for Search
-class HomeSearch extends React.Component {
+// class HomeSearch extends React.Component {
 
-  #css = {
-    searchStyles: {
-      position: 'relative',
-      borderRadius: this.theme.shape.borderRadius,
-      backgroundColor: alpha(this.theme.palette.common.white, 0.15),
-      '&:hover': {
-        backgroundColor: alpha(this.theme.palette.common.white, 0.25),
-      },
-      marginLeft: 0,
-      width: '100%',
-      [this.theme.breakpoints.up('sm')]: {
-        marginLeft: this.theme.spacing(1),
-        width: 'auth',
-      },
-    },
-    iconStyles: {
-      padding: this.theme.spacing(2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputStyles: {
-      color: 'inherit',
-      '& .MuiInputBase-input': {
-        padding: this.theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
-        paddingLeft: `calc(1em + ${this.theme.spacing(4)})`,
-        transition: this.theme.transitions.create('width'),
-        width: '100%',
-        [this.theme.breakpoints.up('sm')]: {
-          width: '12ch',
-          '&:focus': {
-            width: '20ch',
-          },
-        },
-      },
-    },
-  };
-  constructor(props) {
-    super(props);
-    this.props = { ...props };
-    this.theme = this.props.theme;
-    this.state = {};
-  }
+//   #css = {
+//     searchStyles: {
+//       position: 'relative',
+//       borderRadius: this.theme.shape.borderRadius,
+//       backgroundColor: alpha(this.theme.palette.common.white, 0.15),
+//       '&:hover': {
+//         backgroundColor: alpha(this.theme.palette.common.white, 0.25),
+//       },
+//       marginLeft: 0,
+//       width: '100%',
+//       [this.theme.breakpoints.up('sm')]: {
+//         marginLeft: this.theme.spacing(1),
+//         width: 'auth',
+//       },
+//     },
+//     iconStyles: {
+//       padding: this.theme.spacing(2),
+//       height: '100%',
+//       position: 'absolute',
+//       pointerEvents: 'none',
+//       display: 'flex',
+//       alignItems: 'center',
+//       justifyContent: 'center',
+//     },
+//     inputStyles: {
+//       color: 'inherit',
+//       '& .MuiInputBase-input': {
+//         padding: this.theme.spacing(1, 1, 1, 0),
+//         // vertical padding + font size from searchIcon
+//         paddingLeft: `calc(1em + ${this.theme.spacing(4)})`,
+//         transition: this.theme.transitions.create('width'),
+//         width: '100%',
+//         [this.theme.breakpoints.up('sm')]: {
+//           width: '12ch',
+//           '&:focus': {
+//             width: '20ch',
+//           },
+//         },
+//       },
+//     },
+//   };
+//   constructor(props) {
+//     super(props);
+//     this.props = { ...props };
+//     this.theme = this.props.theme;
+//     this.state = {};
+//   }
 
-  render() {
-    return (
-      <Box
-        sx={{
-          position: 'relative',
-        }}
-      ></Box>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <Box
+//         sx={{
+//           position: 'relative',
+//         }}
+//       ></Box>
+//     );
+//   }
+// }
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -150,13 +150,13 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const ListItemLink = (props) => {
-  React.forwardRef((props, ref) => {
-    return (
-      <RouterLink to={props.to} ref={ref} {...props}/>
-    )
-  })
-}
+// const ListItemLink = (props) => {
+//   React.forwardRef((props, ref) => {
+//     return (
+//       <RouterLink to={props.to} ref={ref} {...props}/>
+//     )
+//   })
+// }
 
 class HomeHeader extends React.Component {
   #menuData = [
@@ -251,7 +251,6 @@ class HomeHeader extends React.Component {
   }
 
   handleClose(event) {
-    // console.log(event)
     console.log(
       `menu item closed at ${new Date().toJSON()} by ${event.target.id}`
     );
@@ -263,8 +262,7 @@ class HomeHeader extends React.Component {
 
   render() {
     // const ref = React.createRef()
-    const theme = this.props.theme
-    const history = this.props.history
+    const { history } = this.props
     return (
       <ThemeProvider theme={this.props.theme}>
         <Box

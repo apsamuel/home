@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
+  // Switch,
+  // Route
 } from 'react-router-dom'
 import './index.css';
 import App from './App';

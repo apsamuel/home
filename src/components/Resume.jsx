@@ -1,7 +1,9 @@
 import React from 'react';
-// import { Route } from 'react-router-dom';
+import {
+  withRouter,
+} from 'react-router-dom';
 import { Box, Typography } from '@mui/material';
-// import { SupportRounded } from '@mui/icons-material'
+
 
 class Resume extends React.Component {
   constructor(props) {
@@ -20,4 +22,4 @@ class Resume extends React.Component {
   }
 }
 
-export default Resume;
+export default withRouter(Resume);

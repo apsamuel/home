@@ -6,8 +6,8 @@ import {
   withRouter,
   Switch,
   Route,
-  Redirect,
-  Link
+  // Redirect,
+  // Link
 } from 'react-router-dom'
 import {
   // CssBaseline,
