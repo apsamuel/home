@@ -10,52 +10,53 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Divider,
-  Menu,
-  MenuItem,
+  // Divider,
+  // Menu,
+  // MenuItem,
   Switch,
   FormGroup,
   FormControlLabel,
   Typography,
-  Button,
+  // Button,
   IconButton,
 } from '@mui/material'
 
 import {
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  Info as InfoIcon,
+  ConnectWithoutContact as ContactIcon,
+  DataObject as ResumeIcon,
+  Book as BlogIcon,
 } from '@mui/icons-material'
 
-const headerListData = [
-  {
-    name: 'About'
-  },
-  {
-    name: 'Resume'
-  },
-  {
-    name: 'Blog',
-  },
-  {
-    name: 'Contact'
-  }
-]
-
-const headerList = () => (
-  <Box
-    sx={{ width: 'auto' }}
-    role="presentation"
-  >
-    <List>
-      {headerListData.map( (item, index) => (
-        <ListItem button key={item.name}>
-          <ListItemText primary={item.name} />
-        </ListItem>
-      ) )}
-    </List>
-  </Box>
-);
 
 class HomeHeader extends React.Component {
+  #menuData = [
+    {
+      name: 'About',
+      icon: () => {
+        return <InfoIcon />;
+      },
+    },
+    {
+      name: 'Resume',
+      icon: () => {
+        return <ResumeIcon />;
+      },
+    },
+    {
+      name: 'Blog',
+      icon: () => {
+        return <BlogIcon />;
+      },
+    },
+    {
+      name: 'Contact',
+      icon: () => {
+        return <ContactIcon />;
+      },
+    },
+  ];
   constructor(props) {
     super(props);
     // unwrap props
@@ -65,17 +66,16 @@ class HomeHeader extends React.Component {
       anchorMenuElement: false,
       drawerOpen: false,
       darkMode: false,
-    }
+    };
     // reactive handlers
 
-    this.handleMenu = this.handleMenu.bind(this)
-    this.handleSwitch = this.handleSwitch.bind(this)
-    this.handleClose = this.handleClose.bind(this)
-    this.handleDrawer = this.handleDrawer.bind(this)
+    this.handleMenu = this.handleMenu.bind(this);
+    this.handleSwitch = this.handleSwitch.bind(this);
+    this.handleClose = this.handleClose.bind(this);
+    this.handleDrawer = this.handleDrawer.bind(this);
   }
 
   handleSwitch(event) {
-
     // console.log(event);
     this.setState((state) => ({
       ...state,
@@ -84,39 +84,43 @@ class HomeHeader extends React.Component {
     if (this.props.onChange) {
       this.props.onChange(this.state);
     }
-    console.log(`the theme switch was toggled to ${this.state.darkMode ? 'dark' : 'light'} mode`);
+    console.log(
+      `the theme switch was toggled to ${
+        this.state.darkMode ? 'dark' : 'light'
+      } mode`
+    );
   }
 
   handleMenu(event) {
     if (this.state.anchorMenuElement === true) {
-      console.log(`menu item closed at ${new Date().toJSON()}`)
+      console.log(`menu item closed at ${new Date().toJSON()}`);
     } else {
-      console.log(`menu item opened at ${new Date().toJSON()}`)
+      console.log(`menu item opened at ${new Date().toJSON()}`);
     }
 
-    this.setState(state => ({
+    this.setState((state) => ({
       ...state,
-      anchorMenuElement: !this.state.anchorMenuElement
-    }))
+      anchorMenuElement: !this.state.anchorMenuElement,
+    }));
   }
 
   handleDrawer(event) {
-    // const keyEvent = (event as React.KeyboardEvent).key
-    // console.log(event)
     this.setState((state) => ({
       ...state,
-      drawerOpen: !this.state.drawerOpen
-    }))
-    console.log(`drawer item opened at ${new Date().toJSON()}`)
+      drawerOpen: !this.state.drawerOpen,
+    }));
+    console.log(`drawer item opened at ${new Date().toJSON()}`);
   }
 
   handleClose(event) {
     // console.log(event)
-    console.log(`menu item closed at ${new Date().toJSON()} by ${event.target.id}`);
-    this.setState(state => ({
+    console.log(
+      `menu item closed at ${new Date().toJSON()} by ${event.target.id}`
+    );
+    this.setState((state) => ({
       ...state,
-      anchorMenuElement: false
-    }))
+      anchorMenuElement: false,
+    }));
   }
 
   render() {
@@ -131,48 +135,14 @@ class HomeHeader extends React.Component {
               aria-label="menu"
               aria-controls="menu-appbar"
               aria-haspopup="true"
-              onClick={this.handleMenu}
+              onClick={this.handleDrawer}
               sx={{ mr: 2 }}
             >
               <MenuIcon />
             </IconButton>
 
-            <Menu
-              id="menu-appbar"
-              anchorEl={this.state.anchorMenuElement}
-              open={Boolean(this.state.anchorMenuElement)}
-              onClose={this.handleClose}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              keepMounted
-            >
-              <MenuItem id="about-me" onClick={this.handleClose}>
-                About Me
-              </MenuItem>
-              <MenuItem id="resume" onClick={this.handleClose}>
-                Resume
-              </MenuItem>
-              <MenuItem id="blog" onClick={this.handleClose}>
-                Blog
-              </MenuItem>
-              <MenuItem id="contact" onClick={this.handleClose}>
-                Contact
-              </MenuItem>
-            </Menu>
-
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Aaron Peter Samuel
-            </Typography>
-
             <div>
               <React.Fragment>
-                <Button onClick={this.handleDrawer}>Menu</Button>
                 <SwipeableDrawer
                   anchor={'left'}
                   open={this.state.drawerOpen}
@@ -187,8 +157,11 @@ class HomeHeader extends React.Component {
                       onKeyDown={this.handleDrawer}
                     >
                       <List>
-                        {headerListData.map((item, index) => (
+                        {this.#menuData.map((item, index) => (
                           <ListItem button key={item.name}>
+                            <ListItemIcon>
+                              {item.icon()}
+                            </ListItemIcon>
                             <ListItemText primary={item.name} />
                           </ListItem>
                         ))}
@@ -198,6 +171,10 @@ class HomeHeader extends React.Component {
                 </SwipeableDrawer>
               </React.Fragment>
             </div>
+
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Aaron Peter Samuel
+            </Typography>
 
             <FormGroup>
               <FormControlLabel
@@ -219,10 +196,3 @@ class HomeHeader extends React.Component {
 }
 
 export default HomeHeader
-
-// export default withStyles(
-//   styles,
-//   {
-//     withTheme: true
-//   }
-// )(HomeHeader)
