@@ -22,7 +22,7 @@ class About extends React.Component {
     // const theme = this.props.theme
     return (
       <Box>
-        <Typography variant="h6">Content</Typography>
+        <Typography variant="h6">About</Typography>
       </Box>
     );
   }

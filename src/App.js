@@ -64,6 +64,7 @@ class App extends React.Component {
 
   render() {
     const title = this.#title
+    // const title = 'Dark Photon Consultation'
     const { colorMode } = this.state
     const selectedTheme = colorMode === 'dark'
       ? this.darkTheme
