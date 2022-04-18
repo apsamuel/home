@@ -89,19 +89,19 @@ class App extends React.Component {
           >
             <Switch>
               <Route exact path="/">
-                <p>Testing 123</p>
+                <p>Home Content</p>
               </Route>
               <Route path="/about">
-                <About />
+                <About { ...this.props }/>
               </Route>
               <Route path="/resume">
-                <Resume />
+                <Resume { ...this.props }/>
               </Route>
               <Route path="/blog">
                 <Blog {...this.props}/>
               </Route>
               <Route path="/contact">
-                <Contact />
+                <Contact {...this.props} />
               </Route>
             </Switch>
           </Box>
