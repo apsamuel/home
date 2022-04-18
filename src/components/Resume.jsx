@@ -22,6 +22,8 @@ import {
   ArrowCircleLeftRounded as ArrowCircleLeft,
 } from '@mui/icons-material'
 
+import  ResumeTimelineItem  from '../elements/ResumeTimelineItem.jsx'
+
 class Resume extends React.Component {
   constructor(props) {
     super(props);
@@ -105,15 +107,15 @@ class Resume extends React.Component {
         <Timeline position="alternate">
           {this.state.workHistory.map((item, index) => {
             return (
-              <TimelineItem key={item.companyId}>
-                <TimelineSeparator>
-                  <TimelineDot>
-                    {index % 2 === 0 ? <ArrowCircleRight/> : <ArrowCircleLeft/>}
-                  </TimelineDot>
-                  <TimelineConnector />
-                </TimelineSeparator>
-                <TimelineContent>{item.companyName}</TimelineContent>
-              </TimelineItem>
+              <ResumeTimelineItem
+                {
+                  ...item
+                }
+                direction={index % 2 === 0 ? "left" : "right" }
+                {
+                  ...this.props
+                }
+              />
             );
           })}
         </Timeline>
