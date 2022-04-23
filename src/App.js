@@ -1,16 +1,24 @@
-// import logo from './logo.svg';
 import './App.css';
 import React from 'react'
-// import ReactDom from 'react-dom'
+
+import {
+  library
+} from '@fortawesome/fontawesome-svg-core'
+import {
+  fab
+} from '@fortawesome/free-brands-svg-icons'
+import {
+  faCheckSquare,
+  faCoffee
+} from '@fortawesome/free-solid-svg-icons'
+
+// fab['  ']
 import {
   withRouter,
   Switch,
   Route,
-  // Redirect,
-  // Link
 } from 'react-router-dom'
 import {
-  // CssBaseline,
   ThemeProvider,
   createTheme,
   Box
@@ -25,6 +33,8 @@ import Resume from './components/Resume'
 import Blog from './components/Blog'
 import Contact from './components/Contact'
 
+library.add(fab, faCheckSquare, faCoffee)
+
 class App extends React.Component {
   #title = 'Aaron Peter Samuel'
   #defaultTheme = createTheme(darkTheme)
@@ -32,7 +42,7 @@ class App extends React.Component {
 
   constructor(props) {
     super(props)
-    this.props = { ...props }
+    // this.props = { ...props }
     this.state = {
       colorMode: 'dark',
       theme: this.#defaultTheme
@@ -58,9 +68,6 @@ class App extends React.Component {
     console.log(this.props)
   }
 
-  // eventHandler(state) {
-  //   console.log(state)
-  // }
 
   render() {
     const title = this.#title
