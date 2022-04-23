@@ -13,7 +13,7 @@ import {
 class About extends React.Component {
   constructor(props) {
     super(props)
-    this.props = { ...props }
+    // this.props = { ...props }
     this.theme = this.props.theme
 
   }

@@ -11,7 +11,7 @@ import { Box, Typography } from '@mui/material';
 class Contact extends React.Component {
   constructor(props) {
     super(props);
-    this.props = { ...props };
+    // this.props = { ...props };
     this.theme = this.props.theme;
   }
 
