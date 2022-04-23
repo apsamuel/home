@@ -121,7 +121,7 @@ class HomeHeader extends React.Component {
   constructor(props) {
     super(props);
     // unwrap props
-    this.props = { ...props };
+    // this.props = { ...props };
     this.theme = this.props.theme
     this.title = this.props.title
     this.drawerWidth = this.props.drawerWidth

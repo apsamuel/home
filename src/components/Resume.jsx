@@ -27,13 +27,14 @@ import  ResumeTimelineItem  from '../elements/ResumeTimelineItem.jsx'
 class Resume extends React.Component {
   constructor(props) {
     super(props);
-    this.props = { ...props };
+    // this.props = { ...props };
     this.theme = this.props.theme;
     this.state = {
       generalInfo: {},
       skillsInfo: {},
       educationHistory: [],
-      workHistory: []
+      workHistory: [],
+      workHistoryStats: []
     }
   }
 
@@ -90,6 +91,7 @@ class Resume extends React.Component {
         return json
       })
       .then((json) => {
+        console.log('updating workhistory')
         this.setState((state) => ({
           ...state,
           workHistory: [
@@ -97,6 +99,21 @@ class Resume extends React.Component {
           ]
         }))
       })
+
+    fetch('http://127.0.0.1:8081/api/resume/workhistory/stats')
+      .then((res) => {
+        // console.log(res.json())
+        const json = res.json();
+        // res.json()
+        return json;
+      })
+      .then((json) => {
+        console.log('updating workhistory');
+        this.setState((state) => ({
+          ...state,
+          workHistoryStats: [...json],
+        }));
+      });
 
 
   }
@@ -108,6 +125,7 @@ class Resume extends React.Component {
           {this.state.workHistory.map((item, index) => {
             return (
               <ResumeTimelineItem
+                key={`${item.companyId}`}
                 {
                   ...item
                 }
