@@ -21,6 +21,7 @@ import {
 import {
   ThemeProvider,
   createTheme,
+  responsiveFontSizes,
   Box
 } from '@mui/material'
 import {
@@ -37,7 +38,7 @@ library.add(fab, faCheckSquare, faCoffee)
 
 class App extends React.Component {
   #title = 'Aaron Peter Samuel'
-  #defaultTheme = createTheme(darkTheme)
+  #defaultTheme = responsiveFontSizes( createTheme(darkTheme))
   #drawerWidth = 200
 
   constructor(props) {
@@ -48,8 +49,8 @@ class App extends React.Component {
       theme: this.#defaultTheme
     }
     this.toggleColorMode = this.toggleColorMode.bind(this)
-    this.darkTheme = createTheme(darkTheme)
-    this.lightTheme = createTheme(lightTheme)
+    this.darkTheme = responsiveFontSizes (createTheme(darkTheme))
+    this.lightTheme = responsiveFontSizes( createTheme(lightTheme) )
   }
 
   toggleColorMode(componentState) {

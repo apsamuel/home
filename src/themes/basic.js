@@ -1,3 +1,5 @@
+import * as Colors from '@mui/material/colors'
+
 export const darkTheme = {
   mode: 'dark',
   shape: {
@@ -5,10 +7,10 @@ export const darkTheme = {
   },
   palette: {
     primary: {
-      main: '#000000',
+      main: Colors.blueGrey[500],
     },
     secondary: {
-      main: '#FFFFFF',
+      main:'#ffffff',
     },
   },
 };
@@ -21,7 +23,7 @@ export const lightTheme = {
   },
   palette: {
     primary: {
-      main: '#FFFFFF',
+      main: Colors.blue[100],
     },
     secondary: {
       main: '#000000',

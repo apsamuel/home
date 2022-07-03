@@ -1,6 +1,8 @@
 import React from 'react';
 import {
   withRouter,
+  Switch,
+  Route
 } from 'react-router-dom';
 import {
   Box,
@@ -9,11 +11,11 @@ import {
 
 import {
   Timeline,
-  TimelineSeparator,
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
+  // TimelineSeparator,
+  // TimelineConnector,
+  // TimelineContent,
+  // TimelineDot,
+  // TimelineItem,
 } from '@mui/lab'
 
 
@@ -23,7 +25,7 @@ import {
 } from '@mui/icons-material'
 
 import  ResumeTimelineItem  from '../elements/ResumeTimelineItem.jsx'
-
+import ResumeDetail from '../components/ResumeDetail.jsx'
 class Resume extends React.Component {
   constructor(props) {
     super(props);
@@ -34,7 +36,7 @@ class Resume extends React.Component {
       skillsInfo: {},
       educationHistory: [],
       workHistory: [],
-      workHistoryStats: []
+      workHistoryStats: {}
     }
   }
 
@@ -108,10 +110,10 @@ class Resume extends React.Component {
         return json;
       })
       .then((json) => {
-        console.log('updating workhistory');
+        console.log(`updating workhistory ${JSON.stringify(json)}`);
         this.setState((state) => ({
           ...state,
-          workHistoryStats: [...json],
+          workHistoryStats: {...json},
         }));
       });
 
@@ -121,6 +123,11 @@ class Resume extends React.Component {
     // const theme = this.props.theme
     return (
       <Box>
+        {/* <Switch>
+          {this.state.workHistory.map((item, index) => {
+            return (<Route key={`${item.companyId}`} path={`/${item.companyName}/${item.companyId}`} component={<ResumeDetail {...this.props} {...this.state}/>}>Resume Details</Route>)
+          })}
+        </Switch> */}
         <Timeline position="alternate">
           {this.state.workHistory.map((item, index) => {
             return (
