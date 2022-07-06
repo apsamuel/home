@@ -16,6 +16,7 @@ import {
   CardHeader,
   CardContent,
   CardActions,
+  Dialog,
   Avatar,
   Chip,
   Tooltip,
@@ -45,9 +46,7 @@ import {
 import ResumePieChart from '../elements/ResumeTimelineItemPieChart.jsx'
 import ResumeDetail from '../components/ResumeDetail.jsx'
 
-// function getRouteMatch() {
-//   const { url, path } = useRouteMatch();
-// }
+
 class ResumeTimelineItem extends React.Component {
   constructor(props) {
     super(props);
@@ -58,11 +57,17 @@ class ResumeTimelineItem extends React.Component {
       },
       roles: [],
       stats: {},
+      detail: false,
+      // elapsedTime: 0,
     };
     this.theme = this.props.theme;
+    this.handleDetailOpen = this.handleDetailOpen.bind(this);
+    this.handleDetailClose = this.handleDetailClose.bind(this);
   }
 
   componentDidMount() {
+    // console.log(this.props)
+
     fetch(
       `http://127.0.0.1:8081/api/resume/rolehistory/${this.state.properties.companyId}`
     )
@@ -103,6 +108,22 @@ class ResumeTimelineItem extends React.Component {
         }));
       });
 
+
+  }
+
+  handleDetailOpen() {
+    console.log(`opening detail for ${this.state.properties.companyName} (${this.state.properties.companyId})`);
+    this.setState((state) => ({
+      ...state,
+      detail: !state.detail
+    }))
+  }
+
+  handleDetailClose() {
+    this.setState((state) => ({
+      ...state,
+      detail: false
+    }))
   }
 
   render() {
@@ -110,18 +131,23 @@ class ResumeTimelineItem extends React.Component {
 
     return (
       <TimelineItem key={this.state.properties.companyId}>
+        <Switch>
+
 
           <Route
-            exact
+            //exact
             // path="/resume/:companyName/:companyId"
-            component={<ResumeDetail {...this.props} {...this.state} />}
-            path={`/resume/${this.state.properties.companyName.replaceAll(
-              ' ',
-              ''
-            )}/${this.state.properties.companyId}`}
-          />
+            // component={<ResumeDetail {...this.props} {...this.state} />}
+            // path={`/resume/${this.state.properties.companyName.replaceAll(
+            //   ' ',
+            //   ''
+            // ).toLowerCase()}/${this.state.properties.companyId}`}
 
-
+            path={`${this.props.match.url}/:companyName/:companyId`}
+          >
+            <ResumeDetail {...this.props} {...this.state} />
+          </Route>
+        </Switch>
 
         <TimelineSeparator sx={{}}>
           <TimelineDot>
@@ -269,17 +295,41 @@ class ResumeTimelineItem extends React.Component {
                   <CardActions>
                     <IconButton
                       size='small'
-                      onClick={() => {
-                        history.push(
-                          `/${this.state.properties.companyName.replaceAll(
-                            ' ',
-                            ''
-                          )}/${this.state.properties.companyId}`
-                        );
-                      }}
+                      onClick={this.handleDetailOpen}
+                      // onClick={() => {
+                      //   console.log('running...')
+                      //   console.log(
+                      //     `companyId ${this.state.properties.companyId}`
+                      //   );
+                      //   console.log(
+                      //     `companyName ${this.state.properties.companyName}`
+                      //   )
+                      //   console.log(
+                      //     this
+                      //   )
+                      //   history.push(
+                      //     `${this.props.match.url}/${this.state.properties.companyName.replaceAll(
+                      //       ' ',
+                      //       ''
+                      //     )}/${this.state.properties.companyId}`
+                      //   );
+                      // }}
                     >
                       <WorkHistory />
                     </IconButton>
+                    <Dialog
+                      sx={{
+                        top: '64px !important'
+                      }}
+                      fullScreen
+                      open={this.state.detail}
+                      onClose={this.handleDetailClose}
+                    >
+                      <ResumeDetail
+                        {...this.props}
+                        {...this.state}
+                      />
+                    </Dialog>
                     <IconButton size='small'>
                       <Info />
                     </IconButton>
