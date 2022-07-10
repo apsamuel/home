@@ -250,18 +250,27 @@ class ResumeTimelineItem extends React.Component {
                           </Typography>
                         </Box>
                         <Box>
-                          <Chip label={this.props.companyEmploymentType.toLowerCase()} />
+                          <Chip
+                            label={this.props.companyEmploymentType.toLowerCase()}
+                            color={
+                              this.props.companyEmploymentType.toLowerCase() === 'internship'
+                              ? 'success'
+                              : 'primary'
+                            }
+                            variant='outlined'
+                          />
                         </Box>
                       </Stack>
                     }
                     subheader={
-                      <Stack direction='row' spacing={5}>
+                      <Stack direction='row' spacing={2}>
                         <Chip
                           label={`${this.state.properties.companyStartDate.replaceAll(
                             '-',
                             '/'
                           )}`}
                           color='primary'
+                          variant='outlined'
                         />
                         <Chip
                           label={`${this.state.properties.companyEndDate.replaceAll(
@@ -273,6 +282,7 @@ class ResumeTimelineItem extends React.Component {
                               ? `success`
                               : `primary`
                           }
+                          variant='outlined'
                         />
                       </Stack>
                     }
