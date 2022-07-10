@@ -22,6 +22,7 @@ import {
   Avatar,
   Chip
 } from '@mui/material';
+import ResumePieChart from '../elements/ResumeTimelineItemPieChart.jsx';
 
 class ResumeDetail extends React.Component {
   constructor(props) {
@@ -128,6 +129,7 @@ class ResumeDetail extends React.Component {
                           </Typography>
                         </Box>
                       </Stack>
+
                       {/* Divides overview and general details horizontally */}
                       <Box>
                         <Divider />
@@ -140,27 +142,40 @@ class ResumeDetail extends React.Component {
                         <Stack direction={'row'} spacing={5}>
                           <Box>
                             <Typography variant='h6' sx={{ fontWeight: 600 }}>
-                              Started:
+                              Elapsed Time:
                             </Typography>
                           </Box>
                           <Box>
                             <Typography variant='h6'>
-                              {this.props.companyStartYear}
+                              {this.props.elapsedTime} days
                             </Typography>
                           </Box>
                         </Stack>
                         <Stack direction={'row'} spacing={5}>
                           <Box>
                             <Typography variant='h6' sx={{ fontWeight: 600 }}>
-                              Ended:
+                              Total Roles:
                             </Typography>
                           </Box>
                           <Box>
                             <Typography variant='h6'>
-                              {this.props.companyEndYear}
+                              {this.props.totalRoles}
                             </Typography>
                           </Box>
                         </Stack>
+                      </Stack>
+                      <Stack direction={'column'} spacing={5}>
+                        <Box>
+                          <Typography variant='h6' sx={{ fontWeight: 600 }}>
+                            Tech Stack
+                          </Typography>
+                          <Divider/>
+                        </Box>
+
+                        <ResumePieChart
+                          sx={{}}
+                          data={this.props.stats.roleSummaryTechnology}
+                        />
                       </Stack>
                     </Box>
                   </Stack>

@@ -58,6 +58,8 @@ class ResumeTimelineItem extends React.Component {
       roles: [],
       stats: {},
       detail: false,
+      totalRoles: 0,
+      elapsedTime: 0
       // elapsedTime: 0,
     };
     this.theme = this.props.theme;
@@ -107,6 +109,31 @@ class ResumeTimelineItem extends React.Component {
           },
         }));
       });
+
+    fetch(
+      `http://127.0.0.1:8081/api/resume/workhistory/stats`
+    )
+      .then((res) => {
+        const json = res.json();
+        console.log(
+          `fetching company history stats for company ${this.state.properties.companyName} (${this.state.properties.companyId}`
+        );
+        return json;
+      })
+      .then((json) => {
+        // console.log(`collected workhistory stats ${JSON.stringify(json)}`);
+        const { companyHistoryStats } = json
+        const companyStats = companyHistoryStats.find(company => company.companyId === this.state.properties.companyId)
+        console.log(companyStats)
+        console.log(`stats is a ${typeof json}`);
+        console.log(`${Object.keys(json)}`);
+        this.setState((state) => ({
+          ...state,
+          totalRoles: companyStats.companyTotalRoles,
+          elapsedTime: companyStats.companyElapsedTimeServed
+        }));
+      });
+
 
 
   }
@@ -219,8 +246,9 @@ class ResumeTimelineItem extends React.Component {
                     }
                     title={
                       <Typography component='div' variant='h6'>
-                        {this.props.companyName} (
-                        {this.props.companyEmploymentType})
+                        {this.props.companyName}
+
+                        {this.props.companyEmploymentType}
                       </Typography>
                     }
                     subheader={
