@@ -159,8 +159,6 @@ class ResumeTimelineItem extends React.Component {
     return (
       <TimelineItem key={this.state.properties.companyId}>
         <Switch>
-
-
           <Route
             //exact
             // path="/resume/:companyName/:companyId"
@@ -245,11 +243,16 @@ class ResumeTimelineItem extends React.Component {
                       />
                     }
                     title={
-                      <Typography component='div' variant='h6'>
-                        {this.props.companyName}
-
-                        {this.props.companyEmploymentType}
-                      </Typography>
+                      <Stack spacing={5} direction='row'>
+                        <Box>
+                          <Typography component='div' variant='h6'>
+                            {this.props.companyName}
+                          </Typography>
+                        </Box>
+                        <Box>
+                          <Chip label={this.props.companyEmploymentType.toLowerCase()} />
+                        </Box>
+                      </Stack>
                     }
                     subheader={
                       <Stack direction='row' spacing={5}>
@@ -353,10 +356,7 @@ class ResumeTimelineItem extends React.Component {
                       open={this.state.detail}
                       onClose={this.handleDetailClose}
                     >
-                      <ResumeDetail
-                        {...this.props}
-                        {...this.state}
-                      />
+                      <ResumeDetail {...this.props} {...this.state} />
                     </Dialog>
                     <IconButton size='small'>
                       <Info />
