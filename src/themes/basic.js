@@ -7,7 +7,7 @@ export const darkTheme = {
   },
   palette: {
     primary: {
-      main: Colors.blueGrey[500],
+      main: Colors.blueGrey['A700'],
     },
     secondary: {
       main:'#ffffff',
@@ -23,7 +23,7 @@ export const lightTheme = {
   },
   palette: {
     primary: {
-      main: Colors.blue[100],
+      main: Colors.grey[50],
     },
     secondary: {
       main: '#000000',

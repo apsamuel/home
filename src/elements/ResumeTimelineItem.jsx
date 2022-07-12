@@ -40,6 +40,16 @@ import {
   LensBlurOutlined as LensBlur,
   WorkHistory,
   Info,
+  DateRange,
+  Category,
+  FlightLand,
+  FlightTakeoff,
+  Savings,
+  Shuffle,
+  ConnectWithoutContact,
+  ManageAccounts,
+  Timeline as TimelineIcon,
+  Link as LinkIcon
 
 } from '@mui/icons-material'
 
@@ -243,49 +253,56 @@ class ResumeTimelineItem extends React.Component {
                       />
                     }
                     title={
-                      <Stack spacing={5} direction='row'>
+                      <Stack spacing={2} direction='row'>
                         <Box>
-                          <Typography component='div' variant='h6'>
-                            {this.props.companyName}
-                          </Typography>
+                          <Tooltip
+                            title={`This company may also do business under the following names: ${this.props.companyAliases.join(
+                              ', '
+                            )}`}
+                          >
+                            <Typography component='div' variant='h6'>
+                              {this.props.companyName}
+                            </Typography>
+                          </Tooltip>
                         </Box>
                         <Box>
                           <Chip
                             label={this.props.companyEmploymentType.toLowerCase()}
                             color={
-                              this.props.companyEmploymentType.toLowerCase() === 'internship'
-                              ? 'success'
-                              : 'primary'
+                              this.props.companyEmploymentType.toLowerCase() ===
+                              'internship'
+                                ? 'success'
+                                : 'primary'
                             }
                             variant='outlined'
                           />
                         </Box>
                       </Stack>
                     }
-                    subheader={
-                      <Stack direction='row' spacing={2}>
-                        <Chip
-                          label={`${this.state.properties.companyStartDate.replaceAll(
-                            '-',
-                            '/'
-                          )}`}
-                          color='primary'
-                          variant='outlined'
-                        />
-                        <Chip
-                          label={`${this.state.properties.companyEndDate.replaceAll(
-                            '-',
-                            '/'
-                          )}`}
-                          color={
-                            this.state.properties.companyEndDate === 'current'
-                              ? `success`
-                              : `primary`
-                          }
-                          variant='outlined'
-                        />
-                      </Stack>
-                    }
+                    // subheader={
+                    //   <Stack direction='row' spacing={2}>
+                    //     <Chip
+                    //       label={`${this.state.properties.companyStartDate.replaceAll(
+                    //         '-',
+                    //         '/'
+                    //       )}`}
+                    //       color='primary'
+                    //       variant='outlined'
+                    //     />
+                    //     <Chip
+                    //       label={`${this.state.properties.companyEndDate.replaceAll(
+                    //         '-',
+                    //         '/'
+                    //       )}`}
+                    //       color={
+                    //         this.state.properties.companyEndDate === 'current'
+                    //           ? `success`
+                    //           : `primary`
+                    //       }
+                    //       variant='outlined'
+                    //     />
+                    //   </Stack>
+                    // }
                   ></CardHeader>
                   <CardContent
                     sx={{
@@ -294,24 +311,131 @@ class ResumeTimelineItem extends React.Component {
                   >
                     <Stack
                       direction='column'
+                      spacing={5}
                       sx={{
                         alignContent: 'center',
-                        alignItems: 'center'
+                        alignItems: 'flex-start',
+                        borderStyle: 'solid',
+                        padding: 5
                       }}
                       divider={<Divider orientation='horizontal' flexItem />}
                     >
+                      <Box>
+                        <Stack
+                          direction='row'
+                          spacing={2}
+                          sx={{
+                            alignContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <DateRange />
+                          <Typography
+                            sx={{ fontWeight: 600 }}
+                            variant='subtitle1'
+                          >
+                            Employment Period:
+                          </Typography>
+                          <Tooltip title='started'>
+                            <Chip
+                              icon={<FlightLand />}
+                              label={`${this.state.properties.companyStartDate.replaceAll(
+                                '-',
+                                '/'
+                              )}`}
+                              color='primary'
+                              variant='outlined'
+                            />
+                          </Tooltip>
+                          <Tooltip title='ended'>
+                            <Chip
+                              icon={<FlightTakeoff />}
+                              label={`${this.state.properties.companyEndDate.replaceAll(
+                                '-',
+                                '/'
+                              )}`}
+                              color={
+                                this.state.properties.companyEndDate ===
+                                'current'
+                                  ? `success`
+                                  : `primary`
+                              }
+                              variant='outlined'
+                            />
+                          </Tooltip>
+                        </Stack>
+                      </Box>
+                      <Box>
+                        <Stack
+                          direction='row'
+                          spacing={2}
+                          sx={{
+                            alignContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <Category />
+                          <Typography
+                            sx={{ fontWeight: 600 }}
+                            variant='subtitle1'
+                          >
+                            Company Type:
+                          </Typography>
+                          <Chip
+                            label={this.state.properties.companyType}
+                            icon={(() => {
+                              switch (
+                                this.state.properties.companyType
+                                  .toString()
+                                  .toLowerCase()
+                              ) {
+                                case 'financial services':
+                                  console.log(
+                                    `hit financial services case ${this.state.properties.companyType}`
+                                  );
+                                  return <Savings />;
+                                case 'telecommunications':
+                                  return <ConnectWithoutContact />;
+                                case 'managed services':
+                                  return <ManageAccounts />;
+                                default:
+                                  console.log(
+                                    `using default case ${this.state.properties.companyType}`
+                                  );
+                                  return <Shuffle />;
+                              }
+                            })()}
+                          />
+                        </Stack>
+                      </Box>
                       {Array.isArray(this.state.stats.roleStatsRoleNames) ? (
-                        <Box style={{ display: 'flex' }}>
-                          <Typography variant='subtitle1'>
-                            Role History
+                        <Stack
+                          direction='row'
+                          spacing={2}
+                          sx={{
+                            alignContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <TimelineIcon />
+                          <Typography
+                            sx={{ fontWeight: 600 }}
+                            variant='subtitle1'
+                          >
+                            Role History:
                           </Typography>
                           <Timeline>
                             {this.state.stats.roleStatsRoleNames.map(
                               (roleName) => (
                                 <TimelineItem key={`${roleName}`}>
                                   <TimelineSeparator>
-                                    <TimelineDot />
-                                    <TimelineConnector />
+                                    <TimelineDot
+                                      variant='outlined'
+                                      color='success'
+                                    />
+                                    <TimelineConnector
+                                      sx={{ bgcolor: 'grey.a700' }}
+                                    />
                                   </TimelineSeparator>
                                   <TimelineContent>
                                     <Typography variant='caption'>
@@ -322,55 +446,85 @@ class ResumeTimelineItem extends React.Component {
                               )
                             )}
                           </Timeline>
-                        </Box>
+                        </Stack>
                       ) : (
                         <Box>Positions: None</Box>
                       )}
 
-                      <ResumePieChart
-                        sx={{}}
-                        data={this?.state?.stats?.roleSummaryTechnology || []}
-                      />
+                      {this.state.properties.companyLinks &&
+                      Array.isArray(this.state.properties.companyLinks) ? (
+                        <Stack
+                          direction='row'
+                          spacing={2}
+                          sx={{
+                            alignContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        >
+                          <LinkIcon/>
+                          <Typography
+                            sx={{ fontWeight: 600 }}
+                            variant='subtitle1'
+                          >
+                            Links:
+                          </Typography>
+                          {this.state.properties.companyLinks.map((link) => (
+                            <Tooltip title={link.type}>
+                              <Button
+                                size='small'
+                                variant='outlined'
+                                href={link.url}
+                                startIcon={<LinkIcon />}
+                              >
+                                {link.type}
+                              </Button>
+                            </Tooltip>
+                          ))}
+                        </Stack>
+                      ) : (
+                        <Stack
+                          direction='row'
+                          spacing={2}
+                          sx={{
+                            alignContent: 'center',
+                            alignItems: 'center'
+                          }}
+                        >
+                          No Links
+                        </Stack>
+                      )}
                     </Stack>
                   </CardContent>
                   <CardActions>
-                    <IconButton
+                    <Stack>
+                      <Button
+                        variant='outlined'
+                        onClick={this.handleDetailOpen}
+                        startIcon={<WorkHistory />}
+                      >
+                        Role Details
+                      </Button>
+                      <Dialog
+                        sx={{
+                          top: '64px !important'
+                        }}
+                        fullScreen
+                        open={this.state.detail}
+                        onClose={this.handleDetailClose}
+                      >
+                        <ResumeDetail {...this.props} {...this.state} />
+                      </Dialog>
+                    </Stack>
+                    {/* <IconButton
                       size='small'
                       onClick={this.handleDetailOpen}
-                      // onClick={() => {
-                      //   console.log('running...')
-                      //   console.log(
-                      //     `companyId ${this.state.properties.companyId}`
-                      //   );
-                      //   console.log(
-                      //     `companyName ${this.state.properties.companyName}`
-                      //   )
-                      //   console.log(
-                      //     this
-                      //   )
-                      //   history.push(
-                      //     `${this.props.match.url}/${this.state.properties.companyName.replaceAll(
-                      //       ' ',
-                      //       ''
-                      //     )}/${this.state.properties.companyId}`
-                      //   );
-                      // }}
                     >
                       <WorkHistory />
                     </IconButton>
-                    <Dialog
-                      sx={{
-                        top: '64px !important'
-                      }}
-                      fullScreen
-                      open={this.state.detail}
-                      onClose={this.handleDetailClose}
-                    >
-                      <ResumeDetail {...this.props} {...this.state} />
-                    </Dialog>
+
                     <IconButton size='small'>
                       <Info />
-                    </IconButton>
+                    </IconButton> */}
                   </CardActions>
                 </Stack>
               </Card>
