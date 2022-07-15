@@ -249,9 +249,13 @@ class HomeHeader extends React.Component {
                         <List>
                           {this.#menuData.map((item, index) => (
 
-                              <ListItem button key={item.name} onClick={() => { history.push(item.to)}}>
-                                <ListItemIcon>{item.icon()}</ListItemIcon>
-                                <ListItemText primary={item.name} />
+                              <ListItem button key={`${item.name}-list-item`} onClick={() => { history.push(item.to)}}>
+                                <ListItemIcon
+                                  key={`${item.name}-list-item-icon`}
+                                >
+                                  {item.icon()}
+                                </ListItemIcon>
+                                <ListItemText primary={item.name} key={`${item.name}-list-item-text`} />
                               </ListItem>
                           ))}
                         </List>

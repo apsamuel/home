@@ -34,6 +34,8 @@ import Resume from './components/Resume'
 import Blog from './components/Blog'
 import Contact from './components/Contact'
 
+import Admin from './components/Admin'
+
 library.add(fab, faCheckSquare, faCoffee)
 
 class App extends React.Component {
@@ -78,7 +80,7 @@ class App extends React.Component {
       ? this.darkTheme
       : this.lightTheme
     return (
-      <div className="App">
+      <div className='App'>
         <ThemeProvider theme={selectedTheme}>
           {/* Header Navigation, sticky across all views */}
           <HomeHeader
@@ -92,24 +94,27 @@ class App extends React.Component {
           {/* Content Section */}
           <Box
             style={{
-              paddingTop: 10,
+              paddingTop: 10
             }}
           >
             <Switch>
-              <Route exact path="/">
+              <Route exact path='/'>
                 <p>Home Content</p>
               </Route>
-              <Route path="/about">
-                <About { ...this.props }/>
+              <Route path='/about'>
+                <About {...this.props} />
               </Route>
-              <Route path="/resume">
-                <Resume { ...this.props }/>
+              <Route path='/resume'>
+                <Resume {...this.props} />
               </Route>
-              <Route path="/blog">
-                <Blog {...this.props}/>
+              <Route path='/blog'>
+                <Blog {...this.props} />
               </Route>
-              <Route path="/contact">
+              <Route path='/contact'>
                 <Contact {...this.props} />
+              </Route>
+              <Route path='/admin'>
+                <Admin {...this.props} />
               </Route>
             </Switch>
           </Box>

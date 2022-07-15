@@ -1,4 +1,5 @@
 import React from 'react';
+// import { randomUUID } from 'crypto'
 import {
   withRouter,
   // useRouteMatch,
@@ -410,6 +411,7 @@ class ResumeTimelineItem extends React.Component {
                       </Box>
                       {Array.isArray(this.state.stats.roleStatsRoleNames) ? (
                         <Stack
+
                           direction='row'
                           spacing={2}
                           sx={{
@@ -426,8 +428,8 @@ class ResumeTimelineItem extends React.Component {
                           </Typography>
                           <Timeline>
                             {this.state.stats.roleStatsRoleNames.map(
-                              (roleName) => (
-                                <TimelineItem key={`${roleName}`}>
+                              (roleName, index) => (
+                                <TimelineItem key={`${roleName.replaceAll(' ', '')}-${index}`}>
                                   <TimelineSeparator>
                                     <TimelineDot
                                       variant='outlined'
@@ -468,8 +470,8 @@ class ResumeTimelineItem extends React.Component {
                           >
                             Links:
                           </Typography>
-                          {this.state.properties.companyLinks.map((link) => (
-                            <Tooltip title={link.type}>
+                          {this.state.properties.companyLinks.map((link, index) => (
+                            <Tooltip title={link.type} key={`${this.state.properties.companyId}-links-${index}`}>
                               <Button
                                 size='small'
                                 variant='outlined'

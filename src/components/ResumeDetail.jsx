@@ -29,7 +29,10 @@ class ResumeDetail extends React.Component {
     super(props);
     this.theme = this.props.theme;
     this.state = {
-      roles: []
+      roles: [],
+      data: {
+        ...this.props
+      }
     };
   }
 
@@ -169,7 +172,7 @@ class ResumeDetail extends React.Component {
                           <Typography variant='h6' sx={{ fontWeight: 600 }}>
                             Tech Stack
                           </Typography>
-                          <Divider/>
+                          <Divider />
                         </Box>
 
                         <ResumePieChart
@@ -201,12 +204,20 @@ class ResumeDetail extends React.Component {
                         {/* Positions Held */}
                         <Box>
                           {this.props.roles.map((role, index) => (
-                            <Accordion>
-                              <AccordionSummary>
+                            <Accordion
+                              key={`${this.props.companyId}-${role.roleId}-role-accordion`}
+                            >
+                              <AccordionSummary
+                                key={`${this.props.companyId}-${role.roleId}-role-accordion-summary`}
+                              >
                                 <Typography>{role.roleName}</Typography>
                               </AccordionSummary>
-                              <AccordionDetails>
-                                <List>
+                              <AccordionDetails
+                                key={`${this.props.companyId}-${role.roleId}-role-accordion-details`}
+                              >
+                                <List
+                                  key={`${this.props.companyId}-${role.roleId}-role-list`}
+                                >
                                   {role.roleResponsibilities.map(
                                     (responsibility, index) => (
                                       <div>
