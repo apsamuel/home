@@ -29,7 +29,7 @@
     "react-router-dom": "^5.2.1",
     "react-scripts": "5.0.0",
     "react-spring": "^9.4.4",
-    "recharts": "^2.1.9",
+    "recharts": "^2.1.14",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
