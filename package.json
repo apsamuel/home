@@ -19,7 +19,7 @@
     "@mui/x-data-grid": "^5.13.0",
     "@mui/x-date-pickers": "^5.0.0-beta.0",
     "@octokit/rest": "^18.12.0",
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "downshift": "^6.1.7",
